@@ -1,4 +1,4 @@
-# 📂 Ansible Logrotate
+# Ansible Logrotate
 
 This repo contains an Ansible solution to automate log management for a custom systemd service, `custom-monitor.service`, running on the `sre-log-rotate` host.
 
