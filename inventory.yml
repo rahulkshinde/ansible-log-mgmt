@@ -1,0 +1,7 @@
+# Host inventory
+log_servers:
+  hosts:
+    sre-log-rotate:
+      ansible_user: ubuntu 
+      ansible_host: 15.156.87.80
+      ansible_ssh_private_key_file: ~/src/mithril/ansible-assignment.pem
