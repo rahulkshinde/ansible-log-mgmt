@@ -1,0 +1,15 @@
+# defaults/main.yml
+
+# The service name to use in the postrotate hook.
+ansible-log-mgmt_service_name: "custom-monitor"
+
+# The path to the log files.
+ansible-log-mgmt_log_path: "/var/log/custom-monitor/*.log"
+
+# ansible-log-mgmt settings
+ansible-log-mgmt_options:
+  - daily
+  - rotate 7
+  - compress
+  - notifempty
+  - missingok

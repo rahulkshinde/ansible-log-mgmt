@@ -1,50 +1,38 @@
-# Ansible Logrotate
+Role Name
+=========
 
-This repo contains an Ansible solution to automate log management for a custom systemd service, `custom-monitor.service`, running on the `sre-log-rotate` host.
+A brief description of the role goes here.
 
-The solution deploys a `logrotate` configuration:
+Requirements
+------------
 
-* **Log Path:** `/var/log/custom-monitor/*.log`
-* **Rotation Schedule:** Daily
-* **Retention:** 7 days
-* **Compression:** Enabled
-* **Empty Log Handling:** Skips rotation if logs are empty (`notifempty`)
-* **Post-Rotation Hook:** Reloads/restarts `custom-monitor.service` after rotation.
+Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
-## Execution Steps
+Role Variables
+--------------
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/rahulkshinde/ansible-log-mgmt.git
-    cd ansible-log-mgmt
-    ```
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-2.  **Update Inventory:**
-    Edit the `inventory.yml` file for any host or username changes.
+Dependencies
+------------
 
-3.  **Run the Playbook:**
-    ```bash
-    ansible-playbook -i inventory.yml logrotate.yml
-    ```
+A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
-## ✅ Verification
+Example Playbook
+----------------
 
-After running the playbook successfully, you can SSH into the `sre-log-rotate` host and verify the following:
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-1.  **Directory and Permissions:**
-    ```bash
-    ls -ld /var/log/custom-monitor/
-    # Expected output should show drwxr-xr-x and the directory exists.
-    ```
+    - hosts: servers
+      roles:
+         - { role: username.rolename, x: 42 }
 
-2.  **Logrotate Configuration File:**
-    ```bash
-    cat /etc/logrotate.d/custom-monitor
-    # Check that the file exists and its content matches the requirements (daily, rotate 7, etc.)
-    ```
+License
+-------
 
-3.  **Extra Check:**
-    Run the playbook a second time. All tasks should show `ok=X`, and `changed=0`.
-    ```bash
-    ansible-playbook -i inventory.yml logrotate.yml
-    ```
+BSD
+
+Author Information
+------------------
+
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).

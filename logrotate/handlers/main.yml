@@ -1,0 +1,5 @@
+# handlers/main.yml
+
+- name: Reload ansible-log-mgmt
+  ansible.builtin.command: ansible-log-mgmt -f -s /var/lib/ansible-log-mgmt/ansible-log-mgmt.status /etc/ansible-log-mgmt.d/{{ ansible-log-mgmt_service_name }}
+  listen: "Reload ansible-log-mgmt"

@@ -1,0 +1,9 @@
+# ansible-log-mgmt configuration for {{ ansible-log-mgmt_service_name }}
+{{ ansible-log-mgmt_log_path }} {
+    {% for option in ansible-log-mgmt_options %}
+    {{ option }}
+    {% endfor %}
+    postrotate
+        systemctl reload-or-restart {{ ansible-log-mgmt_service_name }}.service >/dev/null 2>&1 || true
+    endscript
+}

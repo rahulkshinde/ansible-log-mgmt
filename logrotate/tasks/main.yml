@@ -1,0 +1,19 @@
+# tasks/main.yml
+
+- name: Create log directory for {{ ansible-log-mgmt_service_name }}
+  ansible.builtin.file:
+    path: "{{ ansible-log-mgmt_log_path | dirname }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Deploy ansible-log-mgmt configuration for {{ ansible-log-mgmt_service_name }}
+  ansible.builtin.template:
+    src: ansible-log-mgmt.conf.j2
+    dest: "/etc/ansible-log-mgmt.d/{{ ansible-log-mgmt_service_name }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Reload ansible-log-mgmt
