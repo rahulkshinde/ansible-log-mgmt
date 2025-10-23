@@ -30,8 +30,9 @@
       tags:
         - config
 
-    # 3. Fail the playbook
+    # 3. Fail the playbook(skipped when doing --check)
     - name: Fail if exceeds > 500mb
+      when: not ansible_check_mode
       ansible.builtin.command: "du -s --block-size=M {{ log_dir }} | awk '{print $1}'"
       register: du_result
       changed_when: false
