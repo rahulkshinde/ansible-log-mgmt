@@ -1,0 +1,19 @@
+---
+- name: Configure log rotation for all services
+  hosts: sre-log-rotate
+  become: true
+  roles:
+    - role: logrotate
+      vars:
+        logrotate_service_name: custom-monitor
+        logrotate_log_path: /var/log/custom-monitor/*.log
+
+    - role: logrotate
+      vars:
+        logrotate_service_name: nginx
+        logrotate_log_path: /var/log/nginx/*.log
+        logrotate_options:
+          - daily
+          - rotate 30
+          - compress
+          - notifempty
