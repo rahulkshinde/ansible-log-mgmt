@@ -5,6 +5,7 @@
   vars:
     log_dir: /var/log/custom-monitor
     logrotate_conf_file: /etc/logrotate.d/custom-monitor
+    size_limit_mb: 500
 
   tasks:
     # 1. Ensure the log directory exists
@@ -29,9 +30,19 @@
       tags:
         - config
 
-    # 3. Validation
-    - name: Validate the deployed logrotate configuration (optional dry-run)
-      ansible.builtin.command:
-        cmd: "logrotate -d {{ logrotate_conf_file }}"
-      register: logrotate_check
+    # 3. Fail the playbook
+    - name: Fail if exceeds > 500mb
+      ansible.builtin.command: "du -s --block-size=M {{ log_dir }} | awk '{print $1}'"
+      register: du_result
       changed_when: false
+
+    - name: set a fact for mb size
+      ansible.builtin.set_fact:
+        dir_size_mb: "{{ du_result.stdout | regex_replace('M', '') | int }}"
+        when: du_result.stdout | length > 0
+
+    - name: fail with error
+      ansible.builtin.fail:
+        msg: > 
+          Exceeding 500MB
+      when: dir_size_mb > size_limit_mb

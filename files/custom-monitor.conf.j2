@@ -1,11 +1,9 @@
-# custom-monitor.conf.j2
-
 /var/log/custom-monitor/*.log {
     # Rotate logs daily
     daily
 
     # Keep the most recent 7 days of logs
-    rotate 7
+    rotate 30
 
     # Compress rotated logs (gzip is default)
     compress
